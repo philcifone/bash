@@ -10,4 +10,4 @@ web-resize.sh
 
 backup-script.sh
     
-    Thanks to Jay from Learn Linux TV for the lesson in BASH scripting for this script. It has been modified to fit my needs.
+Thanks to Jay from Learn Linux TV for the lesson in BASH scripting for this script. It has been modified to fit my needs.
