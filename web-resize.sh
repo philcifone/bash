@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# philcifone.com -- web-resize script
+# phil@philcifone.com -- web-resize script
 #
 # This script designed to resize a directory of images for my site. 
 # Images are resized to 1200px on the long edge.
@@ -10,8 +10,8 @@
 # google dev tools web interface. 
 #
 # Overview:
-# The script checks if image magick is installed
-# renames any "*.jpeg" to *.jpg" 
+# checks if image magick is installed
+# renames any "*.jpeg" to "*.jpg" 
 # requests user input to generate filepath 
 # outputs path to markdown link format
 # user can then copy & paste into markdown post
@@ -20,17 +20,18 @@
 if ! hash magick 2>/dev/null 
 then
         echo "Please install image magick and re-run the script"
+	exit
 fi
 
-# Handle case where no files match glob patterns
+# handle case where no files match glob patterns
 shopt -s nullglob
 
-# Rename *.jpeg to *.jpg
+# rename *.jpeg to *.jpg
 for file in *.jpeg; do
     mv -- "$file" "${file%.jpeg}.jpg"
 done
 
-# Check for jpg files
+# check for jpeg files
 if compgen -G "*.jpg" > /dev/null; then
     # Resize to 1200px on the long edge and convert to webp
     magick mogrify -resize 1200x1200 -format webp -quality 90 *.jpg
@@ -43,8 +44,8 @@ fi
 # ask user if for photos or blog
 read -p "Is this for photos or blog? " top_level
 
-# ask user to designate path (should exist already)
-read -p "what directory is this? " img_folder
+# ask user to designate final path (should be the present directory)
+read -p "What directory is this? " img_folder
 
 # set variable for img_path, include user input to designate filename
 img_path="/images/${top_level}/${img_folder}/"
