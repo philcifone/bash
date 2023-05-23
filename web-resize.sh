@@ -7,7 +7,7 @@
 # And converted to .webp format.
 #
 # These specs give a solid performance rating through
-# google dev tools web interface.. 
+# google dev tools web interface. 
 #
 # Overview:
 # The script checks if image magick is installed
