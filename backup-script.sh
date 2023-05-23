@@ -26,6 +26,7 @@ fi
 current_date=$(date +%Y-%m-%d)
         
         # set rsync flags and options
-	rsync_options="-avPb --backup-dir $2/$current_date --delete"
+	rsync_options="-avb --backup-dir $2/$current_date --delete"
 
+# run rsync backup command and save output to log
 $(which rsync) $rsync_options $1 $2/current >> backup_$current_date.log
