@@ -15,6 +15,7 @@
 # requests user input to generate filepath 
 # outputs path to markdown link format
 # user can then copy & paste into markdown post
+# deletes JPEG files if user decides
 
 # image magick must be installed
 if ! hash magick 2>/dev/null 
