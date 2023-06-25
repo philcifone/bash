@@ -28,8 +28,8 @@ fi
 shopt -s nullglob
 
 # rename *.jpeg to *.jpg
-for file in *.jpeg; do
-    mv -- "$file" "${file%.jpeg}.jpg"
+for FILE in *.jpeg; do
+    mv -- "$FILE" "${FILE%.jpeg}.jpg"
 done
 
 # check for jpeg files
@@ -43,24 +43,24 @@ else
 fi
 
 # ask user if for photos or blog
-read -p "Is this for photos or blog? " top_level
+read -p "Is this for photos or blog? " TOP_LEVEL
 
 # ask user to designate final path (should be the present directory)
-read -p "What directory is this? " img_folder
+read -p "What directory is this? " IMG_FOLDER
 
 # set variable for img_path, include user input to designate filename
-img_path="/images/${top_level}/${img_folder}/"
+IMG_PATH="/images/${TOP_LEVEL}/${IMG_FOLDER}/"
 
 # list all webp files and save to file
 ls *.webp >> img_list.txt 
 
 # format output for markdown and save to file
-awk -v prefix="${img_path}" '{print "![pic](" prefix $0 ")"}' img_list.txt > md_list.txt
+awk -v prefix="${IMG_PATH}" '{print "![pic](" prefix $0 ")"}' img_list.txt > md_list.txt
 
 # ask user if they want to remove jpeg files when finished
-read -p "Delete JPEG files? (y or n): " delete
+read -p "Delete JPEG files? (y or n): " DELETE
 
-if [ "$delete" = "y" ]; then
+if [ "$DELETE" = "y" ]; then
     rm *.jpg
     echo "JPEG files deleted."
 else
