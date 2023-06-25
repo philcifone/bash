@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+#
+# #####################################################################
+#
 # phil@philcifone.com -- web-resize script
 #
 # This script designed to resize a directory of images for my site. 
@@ -16,6 +19,10 @@
 # outputs path to markdown link format
 # user can then copy & paste into markdown post
 # deletes JPEG files if user decides
+#
+#
+# #####################################################################
+
 
 # image magick must be installed
 if ! hash magick 2>/dev/null 

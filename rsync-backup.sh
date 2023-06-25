@@ -1,10 +1,12 @@
 #!/bin/bash
 #
+# ###############################################################
+#
 # Thanks Jay from Learn Linux TV for the BASH scripting tutorial!
 #
 # This has been modified to fit my needs.
 #
-#
+# ###############################################################
 
 # check to make sure user entered two arguments
 if [ $# -ne 2 ]
