@@ -15,5 +15,10 @@ It has been tweaked ever so slightly to fit my humble needs.
 
 ## main-backup.sh
 
+### TO DO:
+ 
+ - Assign rsync-backup.sh to binary path on Mac Mini
+ - Run segments of script to test
+
 Personal backup script to sync and backup files.
 rsync-backup.sh must be in binary path to run.
