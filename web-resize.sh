@@ -1,70 +1,60 @@
 #!/bin/bash
-#
-#
-# #####################################################################
-#
-# phil@philcifone.com -- web-resize script
-#
-# This script designed to resize a directory of images for my site. 
-# Images are resized to 1200px on the long edge.
-# And converted to .webp format.
-#
-# These specs give a solid performance rating through
-# google dev tools web interface. 
-#
-# Overview:
-# checks if image magick is installed
-# renames any "*.jpeg" to "*.jpg" 
-# requests user input to generate filepath 
-# outputs path to markdown link format
-# user can then copy & paste into markdown post
-# deletes JPEG files if user decides
-#
-#
-# #####################################################################
 
-
-# image magick must be installed
-if ! hash magick 2>/dev/null 
-then
-        echo "Please install image magick and re-run the script"
-	exit
+# Check if ImageMagick (magick command) is installed
+if ! command -v magick &> /dev/null; then
+    echo "Error: ImageMagick is not installed. Please install it and re-run the script."
+    exit 1
 fi
 
-# handle case where no files match glob patterns
-shopt -s nullglob
+# Check if ExifTool is installed
+if ! command -v exiftool &> /dev/null; then
+    echo "Error: ExifTool is not installed. Please install it and re-run the script."
+    exit 1
+fi
 
-# rename *.jpeg to *.jpg
+# Check for jpeg files and handle renaming *.jpeg to *.jpg
+shopt -s nullglob
 for file in *.jpeg; do
     mv -- "$file" "${file%.jpeg}.jpg"
 done
 
-# check for jpeg files
+# Check for jpeg files
 if compgen -G "*.jpg" > /dev/null; then
     # Resize to 1200px on the long edge and convert to webp
-    magick mogrify -resize 1200x1200 -format webp -quality 90 *.jpg
-    echo "Conversion completed."
+    if magick mogrify -resize 1200x1200 -format webp -quality 90 *.jpg 2>/dev/null; then
+        echo "Conversion completed."
+    else
+        echo "Error: Conversion failed."
+        exit 2
+    fi
 else
-    echo "This directory does not contain any JPEG files to convert."
-    exit 1
+    echo "Error: This directory does not contain any JPEG files to convert."
+    exit 2
 fi
 
-# ask user if for photos or blog
+# Remove metadata (EXIF) from JPEG and WebP files
+if exiftool -all= *.jpg 2>/dev/null && exiftool -all= *.webp 2>/dev/null; then
+    echo "Metadata removal completed."
+else
+    echo "Error: Metadata removal failed."
+fi
+
+# Ask user if for photos or blog
 read -p "Is this for photos or blog? " top_level
 
-# ask user to designate final path (should be the present directory)
+# Ask user to designate the final path (should be the present directory)
 read -p "What directory is this? " img_folder
 
-# set variable for img_path, include user input to designate filename
+# Set variable for img_path, include user input to designate filename
 img_path="/images/${top_level}/${img_folder}/"
 
-# list all webp files and save to file
+# List all webp files and save to a file
 ls *.webp >> img_list.txt 
 
-# format output for markdown and save to file
+# Format output for markdown and save to a file
 awk -v prefix="${img_path}" '{print "![pic](" prefix $0 ")"}' img_list.txt > md_list.txt
 
-# ask user if they want to remove jpeg files when finished
+# Ask user if they want to remove jpeg files when finished
 read -p "Delete JPEG files? (y or n): " delete
 
 if [ "$delete" = "y" ]; then
@@ -75,3 +65,4 @@ else
 fi
 
 exit
+
