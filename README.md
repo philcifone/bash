@@ -22,3 +22,11 @@ It has been tweaked ever so slightly to fit my humble needs.
 
 Personal backup script to sync and backup files.
 rsync-backup.sh must be in binary path to run.
+
+## filebrowser-backup.sh
+
+Personal backup script from source of authority to homelab.
+
+## yay-install.sh
+
+Install script for yay package for Arch Linux distributions.
