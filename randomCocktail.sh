@@ -18,6 +18,7 @@ cocktail_glass=$(jq -r '.drinks[0].strGlass' <<< "$cocktail_data")
 cocktail_instructions=$(jq -r '.drinks[0].strInstructions' <<< "$cocktail_data")
 
 # Display the formatted output
+echo "------------------------------------------------"
 echo "Random Cocktail: $cocktail_name"
 echo "Suggested Glassware: $cocktail_glass"
 echo "Ingredients: "
@@ -36,4 +37,5 @@ for i in {1..15}; do
 done
 
 echo "Instructions: $cocktail_instructions"
+echo "------------------------------------------------"
 

@@ -23,6 +23,7 @@ if [ $? -eq 0 ]; then
     echo "Conditions: $(echo "$weather_data" | jq -r '.properties.periods[1].shortForecast')"
     echo "Humidity: $(echo "$weather_data" | jq -r '.properties.periods[1].relativeHumidity.value')%"
     echo "Wind: $(echo "$weather_data" | jq -r '.properties.periods[1].windSpeed')"
+    echo "-------------------------------------"
 else
     echo "Failed to fetch weather data. Check your internet connection or the API URL."
 fi
