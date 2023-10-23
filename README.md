@@ -37,4 +37,10 @@ Weather for my location
 
 ## website-checker.sh
 
-Checks my website for downtime and sends notification if down. assigned to `*/15 * * *` cronjob
+Checks my website for downtime and sends notification if down. Suggest assignment to `*/15 * * *` cronjob
+
+## randomCocktail.sh
+
+Uses the free CocktailDB API at https://www.thecocktaildb.com/api/json/v1/1/random.php, generates a random cocktail when the script is run.
+
+
