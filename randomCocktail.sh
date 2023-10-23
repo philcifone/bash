@@ -14,10 +14,12 @@ fi
 
 # Extract the cocktail name and instructions
 cocktail_name=$(jq -r '.drinks[0].strDrink' <<< "$cocktail_data")
+cocktail_glass=$(jq -r '.drinks[0].strGlass' <<< "$cocktail_data")
 cocktail_instructions=$(jq -r '.drinks[0].strInstructions' <<< "$cocktail_data")
 
 # Display the formatted output
 echo "Random Cocktail: $cocktail_name"
+echo "Suggested Glassware: $cocktail_glass"
 echo "Ingredients: "
 
 # Iterate through ingredients and measures
