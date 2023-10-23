@@ -30,3 +30,11 @@ Personal backup script from source of authority to homelab.
 ## yay-install.sh
 
 Install script for yay package for Arch Linux distributions.
+
+## weather.sh
+
+Weather for my location
+
+## website-checker.sh
+
+Checks my website for downtime and sends notification if down. assigned to `*/15 * * *` cronjob
