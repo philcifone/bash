@@ -1,10 +1,23 @@
 #!/bin/bash
+#
+# Cocktail Recipe Lookup by Phil Cifone
+#         
+# phil@philcifone.com
+#
+#
+# Fetches data from the https://www.thecocktaildb.com API -- Thank you!
+#
+#
+#
 
+# user input for spirit selection & API variable
 echo "What spirit would you like cocktail recipes for?"
 
 read spirit
 
-spiritAPI="https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=$spirit"
+spirit_formatted=$(echo "$spirit" | tr ' ' '+')
+
+spiritAPI="https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=$spirit_formatted"
 
 # Use `curl` to fetch cocktail list
 cocktail_list=$(curl -s "$spiritAPI")
@@ -33,7 +46,10 @@ echo "Which recipe would you like to see?"
 
 read drink_id
 
-cocktail_API="https://www.thecocktaildb.com/api/json/v1/1/search.php?s=$drink_id"
+# Replace spaces with plus symbols in user input
+drink_id_formatted=$(echo "$drink_id" | tr ' ' '+')
+
+cocktail_API="https://www.thecocktaildb.com/api/json/v1/1/search.php?s=$drink_id_formatted"
 
 # Use `curl` to fetch cocktail list
 cocktail_data=$(curl -s "$cocktail_API")
