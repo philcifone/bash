@@ -23,7 +23,7 @@ spiritAPI="https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=$spirit_form
 cocktail_list=$(curl -s "$spiritAPI")
 
 # Check if the API request was successful
-if [ "$(jq -r '.drinks[0]' <<< "$cocktail_data")" == "null" ]; then
+if [ "$(jq -r '.drinks[0].strDrink' <<< "$cocktail_list")" == "" ]; then
     echo "Failed to fetch cocktail recipes for '$spirit'. Please try again later."
     exit 1
 fi
@@ -53,6 +53,12 @@ cocktail_API="https://www.thecocktaildb.com/api/json/v1/1/search.php?s=$drink_id
 
 # Use `curl` to fetch cocktail list
 cocktail_data=$(curl -s "$cocktail_API")
+
+# Check if the API request was successful
+if [ "$(jq -r '.drinks[0].strDrink' <<< "$cocktail_data")" == "null" ]; then
+    echo "Failed to fetch cocktail recipes for '$spirit'. Please try again later."
+    exit 1
+fi
 
 # Extract the cocktail name and instructions
 cocktail_name=$(jq -r '.drinks[0].strDrink' <<< "$cocktail_data")
