@@ -10,20 +10,32 @@ weather_data=$(curl -s "$weather_api")
 # Check if the request was successful
 if [ $? -eq 0 ]; then
     # Parse and display relevant weather information using jq
-    echo "Weather Forecast for Your Location Today:"
-    echo "-------------------------------------"
-    echo "Location: $(echo "$weather_data" | jq -r '.properties.periods[0].name') in Drexel Hill, PA"
-    echo "Temperature: $(echo "$weather_data" | jq -r '.properties.periods[0].temperature')°F"
-    echo "Conditions: $(echo "$weather_data" | jq -r '.properties.periods[0].shortForecast')"
-    echo "Humidity: $(echo "$weather_data" | jq -r '.properties.periods[0].relativeHumidity.value')%"
-    echo "Wind: $(echo "$weather_data" | jq -r '.properties.periods[0].windSpeed')"
-    echo "-------------------------------------"
-    echo "Location: $(echo "$weather_data" | jq -r '.properties.periods[1].name') in Drexel Hill, PA"
-    echo "Temperature: $(echo "$weather_data" | jq -r '.properties.periods[1].temperature')°F"
-    echo "Conditions: $(echo "$weather_data" | jq -r '.properties.periods[1].shortForecast')"
-    echo "Humidity: $(echo "$weather_data" | jq -r '.properties.periods[1].relativeHumidity.value')%"
-    echo "Wind: $(echo "$weather_data" | jq -r '.properties.periods[1].windSpeed')"
-    echo "-------------------------------------"
+    echo "Weather Forecast for Your Location:"
+    echo "---------------------------------------------------------------------------------------------------------------"
+
+    for i in {0..13}; do       # Change this number for amount of days in forecast
+    location=$(echo "$weather_data" | jq -r ".properties.periods[$i].name")
+    temperature=$(echo "$weather_data" | jq -r ".properties.periods[$i].temperature")°F
+    conditions=$(echo "$weather_data" | jq -r ".properties.periods[$i].shortForecast")
+    humidity=$(echo "$weather_data" | jq -r ".properties.periods[$i].relativeHumidity.value")%
+    wind=$(echo "$weather_data" | jq -r ".properties.periods[$i].windSpeed")
+    forecast=$(echo "$weather_data" | jq -r ".properties.periods[$i].detailedForecast")
+    precipitation=$(echo "$weather_data" | jq -r ".properties.periods[$i].probabilityOfPrecipitation.value")
+    
+    # Check if precipitation is null, and replace it with "0"
+    if [ "$precipitation" = "null" ]; then
+        precipitation="0"
+    fi
+
+    echo "Location: $location in Drexel Hill, PA"
+    echo "Temperature: $temperature"
+    echo "Conditions: $conditions"
+    echo "Humidity: $humidity"
+    echo "Wind: $wind"
+    echo "Chance of Precipitation: $precipitation%"
+    echo "Detailed Forecast: $forecast"
+    echo "---------------------------------------------------------------------------------------------------------------"
+    done
 else
     echo "Failed to fetch weather data. Check your internet connection or the API URL."
 fi
